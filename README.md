@@ -14,7 +14,7 @@ A simple browser extension that highlights text and allows quick annotations.
    git clone https://github.com/imeanup/highlighter.git
     ```
 2. Open Google Chrome (or Chromium-based browser).
-3. Navigate to: chrome://extensions/
+3. Navigate to: `chrome://extensions/`
 4. Enable Developer mode (toggle in top-right).
 5. Click Load unpacked and select the folder:
     ```
