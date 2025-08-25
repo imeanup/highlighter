@@ -1,4 +1,5 @@
-/*! Multi-highlight version:1.21  18-06-2020 */ ! function(a) {
+/*! Multi-highlight version:1.21  18-06-2020 */ 
+! function(a) {
     chrome.runtime.getBackgroundPage(function(b) {
         ! function(c) {
             function d(a) {
