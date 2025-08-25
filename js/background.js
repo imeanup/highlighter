@@ -1,91 +1,106 @@
-/*! Multi-highlight version:1.21  18-06-2020 */ ! function(a, b) {
-    var c = a.background = {},
-        d = chrome.app.getDetails(),
-        e = c.USER_ID_STORE = "userUUID",
-        f = c.ACTIVE_STATUS_STORE = "isActive",
-        g = c.KEYWORDS_STRING_STORE = "keywordsString",
-        h = c.KEYWORDS_ARRAY_STORE = "keywordsArray";
-    c.setLocalStorage = function(c, d) {
-            var e = a.localStorage.getItem(c),
-                f = e != d;
-            a.localStorage.setItem(c, d), f && b.trigger("storageChange", {
-                key: c,
-                value: d
-            })
-        }, c.getLocalStorage = function(b) {
-            return a.localStorage.getItem(b)
-        }, c.getUserId = function() {
-            function a() {
-                for (var a = [], b = "0123456789abcdef", c = 0; 36 > c; c++) a[c] = b.substr(Math.floor(16 * Math.random()), 1);
-                a[14] = "4", a[19] = b.substr(8 | 3 & a[19], 1), a[8] = a[13] = a[18] = a[23] = "-";
-                var d = a.join("");
-                return d
-            }
-            var b = this.getLocalStorage(e);
-            return b || (b = a(), this.setLocalStorage(e, b)), b
-        }, c.getActiveStatus = function() {
-            return "false" == this.getLocalStorage(f) ? !1 : !0
-        }, c.setActiveStatus = function(a) {
-            this.setLocalStorage(f, a ? "true" : "false")
-        }, c.getKeywordsString = function() {
-            return this.getLocalStorage(g) || ""
-        }, c.setKeywordsString = function(a) {
-            this.setLocalStorage(g, a), this.setKeywords("" == $.trim(a) ? [] : $.trim(a).toLowerCase().split(/\s+/))
-        }, c.getKeywords = function() {
-            return JSON.parse(this.getLocalStorage(h)) || []
-        }, c.setKeywords = function(a) {
-            this.setLocalStorage(h, JSON.stringify(a))
-        }, chrome.runtime.onMessage.addListener(function(a, b, d) {
-            var e;
-            "rpc" == a.opt && (e = c[a.func].apply(c, a.args)), d(e)
-        }), b.on("storageChange", function(a, b) {
-            console.log('Event "storageChange" on key "' + b.key + '" triggered.'), chrome.tabs.query({
-                active: !0,
-                currentWindow: !0
-            }, function(a) {
-                $.each(a, function() {
-                    chrome.tabs.sendMessage(a[0].id, {
-                        opt: "event",
-                        event: "storageChange",
-                        args: b
-                    })
-                })
-            })
-        }),
-        function() {
-            function a(a) {
-                for (var b = 0, c = h.length; c > b; b++)
-                    if (new RegExp(h[b].replace(/\*/gi, ".*?")).test(a)) return !0;
-                return !1
-            }
+/*! Highlighter-v2 version: 1.0.2 Aug 25, 2025 */ 
 
-            function b(a) {
-                for (var b = 0, c = f.length; c > b; b++) chrome.tabs.executeScript(a.id, {
-                    file: f[b],
-                    allFrames: e.all_frames
-                });
-                for (var b = 0, c = g.length; c > b; b++) chrome.tabs.insertCSS(a.id, {
-                    file: g[b],
-                    allFrames: e.all_frames
-                })
-            }
+const ACTIVE_STATUS_STORE = "isActive";
+const KEYWORDS_STRING_STORE = "keywordsString";
+const KEYWORDS_ARRAY_STORE = "keywordsArray";
+const MATCH_URLS = ["http://*/*", "https://*/*", "file://*/*"];
+const CONTENT_JS_FILES = ["js/jquery.js", "js/highlighter.js", "js/content-action.js"];
+const CONTENT_CSS_FILES = ["css/highlight.css"];
 
-            function c() {
-                chrome.windows.getAll({
-                    populate: !0
-                }, function(c) {
-                    for (var d, e = 0, f = c.length; f > e; e++) {
-                        d = c[e];
-                        for (var g, h = 0, i = d.tabs.length; i > h; h++) g = d.tabs[h], a(g.url) && b(g)
-                    }
-                })
-            }
-            var e = d.content_scripts[0],
-                f = e.js,
-                g = e.css,
-                h = e.matches;
-            chrome.runtime.onInstalled.addListener(function(a) {
-                "install" == a.reason && (console.log("This is a first install!"), c())
-            })
-        }()
-}(this, $(this));
+function ensureInjected(tabId, done) {
+  chrome.scripting.insertCSS(
+    { target: { tabId, allFrames: true }, files: CONTENT_CSS_FILES },
+    () => {
+      chrome.scripting.executeScript(
+        { target: { tabId, allFrames: true }, files: CONTENT_JS_FILES },
+        () => {
+          if (typeof done === "function") done();
+        }
+      );
+    }
+  );
+}
+
+function sendWithInjection(tabId, message) {
+  chrome.tabs.sendMessage(tabId, message, () => {
+    if (chrome.runtime.lastError) {
+      ensureInjected(tabId, () => {
+        chrome.tabs.sendMessage(tabId, message, () => {
+        });
+      });
+    }
+  });
+}
+
+function broadcastToAll(message) {
+  chrome.tabs.query({ url: MATCH_URLS }, (tabs) => {
+    tabs.forEach((tab) => sendWithInjection(tab.id, message));
+  });
+}
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.opt !== "rpc") return;
+  switch (message.func) {
+    case "getKeywordsString": {
+      chrome.storage.local.get(KEYWORDS_STRING_STORE, (data) => {
+        sendResponse(data[KEYWORDS_STRING_STORE] || "");
+      });
+      return true;
+    }
+    case "getKeywords": {
+      chrome.storage.local.get(KEYWORDS_ARRAY_STORE, (data) => {
+        sendResponse(data[KEYWORDS_ARRAY_STORE] || []);
+      });
+      return true;
+    }
+    case "setKeywordsString": {
+      const str = message.args?.[0] || "";
+      const arr =
+        str.trim() === "" ? [] : str.trim().toLowerCase().split(/\s+/);
+      chrome.storage.local.set(
+        {
+          [KEYWORDS_STRING_STORE]: str,
+          [KEYWORDS_ARRAY_STORE]: arr,
+        },
+        () => {
+          broadcastToAll({
+            opt: "event",
+            event: "storageChange",
+            args: { key: KEYWORDS_ARRAY_STORE, value: arr },
+          });
+          sendResponse({ ok: true });
+        }
+      );
+      return;
+    }
+    case "getActiveStatus": {
+      chrome.storage.local.get(ACTIVE_STATUS_STORE, (data) => {
+        let active = true;
+        if (Object.prototype.hasOwnProperty.call(data, ACTIVE_STATUS_STORE)) {
+          active = data[ACTIVE_STATUS_STORE];
+        }
+        sendResponse(active);
+      });
+      return true;
+    }
+    case "setActiveStatus": {
+      const active = !!message.args?.[0];
+      chrome.storage.local.set({ [ACTIVE_STATUS_STORE]: active }, () => {
+        broadcastToAll({
+          opt: "event",
+          event: "storageChange",
+          args: { key: ACTIVE_STATUS_STORE, value: active },
+        });
+        sendResponse({ ok: true });
+      });
+      return;
+    }
+  }
+});
+chrome.runtime.onInstalled.addListener(({ reason }) => {
+  if (reason === "install" || reason === "update") {
+    chrome.tabs.query({ url: MATCH_URLS }, (tabs) => {
+      tabs.forEach((tab) => ensureInjected(tab.id));
+    });
+  }
+});

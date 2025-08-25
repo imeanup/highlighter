@@ -1,13 +1,25 @@
-/*! Multi-highlight version:1.21  18-06-2020 */ ! function(a, b) {
+/*! Highlighter-v2 version: 1.0.2 Aug 25, 2025 */ 
+
+! function(a, b) {
     function c() {
-        var a = $.Deferred();
-        return chrome.extension.sendMessage({
-            opt: "rpc",
-            func: arguments[0],
-            args: Array.prototype.slice.call(arguments, 1)
-        }, function(b) {
-            a.resolve(b)
-        }), a
+        var dfd = $.Deferred();
+        const args = Array.prototype.slice.call(arguments, 1);
+        const func = arguments[0];
+        const expectsResponse = (func === "getKeywords" || func === "getActiveStatus" || func === "getKeywordsString");
+        if (expectsResponse) {
+            chrome.runtime.sendMessage({ opt: "rpc", func, args }, function (b) {
+                if (chrome.runtime.lastError) {
+                    console.warn(chrome.runtime.lastError.message);
+                    dfd.resolve(null);
+                } else {
+                    dfd.resolve(b);
+                }
+            });
+        } else {
+            chrome.runtime.sendMessage({ opt: "rpc", func, args });
+            dfd.resolve();
+        }
+        return dfd;
     }
 
     function d(a, b) {

@@ -1,4 +1,4 @@
-# Highlighter Chrome Extension
+# Highlighter-v2 Chrome Extension
 
 A simple browser extension that highlights text and allows quick annotations.
 
@@ -16,7 +16,7 @@ A simple browser extension that highlights text and allows quick annotations.
 2. Open Google Chrome (or Chromium-based browser).
 3. Navigate to: `chrome://extensions/`
 4. Enable Developer mode (toggle in top-right).
-5. Click Load unpacked and select the folder:
+5. Click Load unpacked and select the folder in which `manifest.json` file is located:
     ```
     ~/Documents/highlighter
     ```

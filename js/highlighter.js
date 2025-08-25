@@ -1,4 +1,6 @@
-/*! Multi-highlight version:1.21  18-06-2020 */ ! function(a, b) {
+/*! Highlighter-v2 version: 1.0.2 Aug 25, 2025 */ 
+
+! function(a, b) {
     if ("object" == typeof module && "object" == typeof module.exports) {
         var c = require("jQuery");
         module.exports = b(c)
