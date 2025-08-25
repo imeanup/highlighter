@@ -1,4 +1,4 @@
-/*! Highlighter-v2 version: 1.0.1 Aug 25, 2025 */
+/*! Highlighter-v2 version: 1.0.2 Aug 25, 2025 */
 
 var e = $("#highlight-words");
 var f = e.height() + 50;
@@ -46,4 +46,12 @@ m.on("click", function() {
             args: [newState]
         });
     }, 100);
+});
+
+$("#support-link").click(function() {
+    chrome.tabs.create({ url: "https://github.com/imeanup/highlighter/issues/new" });
+});
+
+$("#donate-link").click(function() {
+    chrome.tabs.create({ url: "https://github.com/imeanup/" });
 });

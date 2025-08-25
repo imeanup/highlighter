@@ -1,4 +1,4 @@
-/*! Highlighter-v2 version: 1.0.1 Aug 25, 2025 */ 
+/*! Highlighter-v2 version: 1.0.2 Aug 25, 2025 */ 
 
 const ACTIVE_STATUS_STORE = "isActive";
 const KEYWORDS_STRING_STORE = "keywordsString";
@@ -68,9 +68,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             event: "storageChange",
             args: { key: KEYWORDS_ARRAY_STORE, value: arr },
           });
+          sendResponse({ ok: true });
         }
       );
-      sendResponse({ ok: true });
       return;
     }
     case "getActiveStatus": {
@@ -81,7 +81,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         }
         sendResponse(active);
       });
-      sendResponse({ ok: true });
       return true;
     }
     case "setActiveStatus": {
@@ -92,6 +91,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           event: "storageChange",
           args: { key: ACTIVE_STATUS_STORE, value: active },
         });
+        sendResponse({ ok: true });
       });
       return;
     }
