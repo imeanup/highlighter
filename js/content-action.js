@@ -1,3 +1,5 @@
+/*! Highlighter-v2 version: 1.0.1 Aug 25, 2025 */ 
+
 ! function(a, b) {
     function c() {
         var a = $.Deferred();

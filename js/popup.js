@@ -1,4 +1,5 @@
-// Set up for textarea
+/*! Highlighter-v2 version: 1.0.1 Aug 25, 2025 */
+
 var e = $("#highlight-words");
 var f = e.height() + 50;
 var g = e.width();
@@ -14,19 +15,16 @@ var j = $('<textarea spellcheck="false"></textarea>')
 e.empty().append(j);
 var l, m = $("#switcher");
 
-// Initialize textarea with saved keywords
 chrome.runtime.sendMessage({ opt: "rpc", func: "getKeywordsString", args: []}, 
     function(response) {
         j.val(response || "");
 });
 
-// Initialize switcher with saved active status
 chrome.runtime.sendMessage({opt: "rpc", func: "getActiveStatus", args: []}, 
     function(isActive) {
         m.attr("data-on", isActive ? "true" : "false");
 });
 
-// Update keywords as user types
 function updateKeywords(delay) {
     clearTimeout(l);
     l = setTimeout(function() {
@@ -37,7 +35,6 @@ j.on("input", function() {
     updateKeywords(100);
 });
 
-// Toggle active status on click
 m.on("click", function() {
     var current = m.attr("data-on") === "true";
     m.attr("data-on", current ? "false" : "true");
