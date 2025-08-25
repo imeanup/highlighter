@@ -13,7 +13,7 @@
     "tabs",
     "storage"
   ],
-  "host_permission": [
+  "host_permissions": [
     "http://*/*",
     "https://*/*",
     "file://*/*"

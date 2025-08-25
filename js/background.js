@@ -17,8 +17,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 return true;
             case "setKeywordsString":
                 const str = message.args[0] || "";
-                const arr = (str.trim() === "" ? [] : str.split(/\\r?\\n/));
-                chrome.storage.local.set({[KEYWORDS_STRING_STORE]: str, [KEYWORDS_ARRAY_STORE]: arr}, () => {
+                const arr = (str.trim() === "" ? [] : str.trim().toLowerCase().split(/\r?\n/));
+                chrome.storage.local.set({
+                    [KEYWORDS_STRING_STORE]: str, 
+                    [KEYWORDS_ARRAY_STORE]: arr
+                }, () => {
                     chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
                         tabs.forEach(tab => {
                             chrome.tabs.sendMessage(tab.id, {
@@ -54,5 +57,24 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 });
                 return;
         }
+    }
+});
+
+chrome.runtime.onInstalled.addListener(({ reason }) => {
+    if (reason === "install" || reason === "update") {
+        chrome.tabs.query({}, (tabs) => {
+            tabs.forEach(tab => {
+                if (tab.url && /^https?:/.test(tab.url)) {
+                    chrome.scripting.executeScript({
+                        target: { tabId: tab.id, allFrames: true },
+                        files: ["js/jquery.js", "js/highlighter.js", "js/content-action.js"]
+                    });
+                    chrome.scripting.insertCSS({
+                        target: { tabId: tab.id, allFrames: true },
+                        files: ["css/highlight.css"]
+                    });
+                }
+            });
+        });
     }
 });

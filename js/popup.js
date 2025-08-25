@@ -16,7 +16,7 @@ var l, m = $("#switcher");
 
 // Initialize textarea with saved keywords
 chrome.runtime.sendMessage({ opt: "rpc", func: "getKeywordsString", args: []}, 
-    function(respose) {
+    function(response) {
         j.val(response || "");
 });
 
