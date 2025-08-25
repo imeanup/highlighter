@@ -1,5 +1,4 @@
-/*! Multi-highlight version:1.21  18-06-2020 */ 
-! function(a, b) {
+/*! Multi-highlight version:1.21  18-06-2020 */ ! function(a, b) {
     if ("object" == typeof module && "object" == typeof module.exports) {
         var c = require("jQuery");
         module.exports = b(c)

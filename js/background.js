@@ -1,5 +1,4 @@
-/*! Multi-highlight version:1.21  18-06-2020 */ 
-! function(a, b) {
+/*! Multi-highlight version:1.21  18-06-2020 */ ! function(a, b) {
     var c = a.background = {},
         d = chrome.app.getDetails(),
         e = c.USER_ID_STORE = "userUUID",
