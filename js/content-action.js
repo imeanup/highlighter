@@ -1,7 +1,7 @@
-/*! Multi-highlight version:1.21  18-06-2020 */ ! function(a, b) {
+! function(a, b) {
     function c() {
         var a = $.Deferred();
-        return chrome.extension.sendMessage({
+        return chrome.runtime.sendMessage({
             opt: "rpc",
             func: arguments[0],
             args: Array.prototype.slice.call(arguments, 1)

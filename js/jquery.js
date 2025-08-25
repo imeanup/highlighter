@@ -1,4 +1,4 @@
-/*! Multi-highlight version:1.21  18-06-2020 */ ! function(a, b) {
+! function(a, b) {
     function c(a) {
         var b = a.length,
             c = fb.type(a);
