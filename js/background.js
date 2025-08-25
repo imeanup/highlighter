@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 return true;
             case "setKeywordsString":
                 const str = message.args[0] || "";
-                const arr = (str.trim() === "" ? [] : str.trim().toLowerCase().split(/\r?\n/));
+                const arr = (str.trim() === "" ? [] : str.trim().toLowerCase().split(/\s+/));
                 chrome.storage.local.set({
                     [KEYWORDS_STRING_STORE]: str, 
                     [KEYWORDS_ARRAY_STORE]: arr
