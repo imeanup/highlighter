@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Highlight-v2",
   "description": "Search and highlight multiple words on web pages.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "icons": {
     "19": "img/19x19.png",
     "48": "img/48x48.png",
@@ -11,7 +11,8 @@
   },
   "permissions": [
     "tabs",
-    "storage"
+    "storage",
+    "scripting"
   ],
   "host_permissions": [
     "http://*/*",
