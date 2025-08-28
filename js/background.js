@@ -22,10 +22,13 @@ function ensureInjected(tabId, done) {
 }
 
 function sendWithInjection(tabId, message) {
-  chrome.tabs.sendMessage(tabId, message, () => {
+  chrome.tabs.sendMessage(tabId, message, (res) => {
     if (chrome.runtime.lastError) {
       ensureInjected(tabId, () => {
-        chrome.tabs.sendMessage(tabId, message, () => {
+        chrome.tabs.sendMessage(tabId, message, (res2) => {
+          if (chrome.runtime.lastError){
+            console.warn('sendWithInjection retry failed:', chrome.runtime.lastError.message);
+          }
         });
       });
     }
@@ -45,13 +48,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       chrome.storage.local.get(KEYWORDS_STRING_STORE, (data) => {
         sendResponse(data[KEYWORDS_STRING_STORE] || "");
       });
-      return true;
+      return true; // async
     }
     case "getKeywords": {
       chrome.storage.local.get(KEYWORDS_ARRAY_STORE, (data) => {
         sendResponse(data[KEYWORDS_ARRAY_STORE] || []);
       });
-      return true;
+      return true; // async 
     }
     case "setKeywordsString": {
       const str = message.args?.[0] || "";
@@ -71,7 +74,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           sendResponse({ ok: true });
         }
       );
-      return;
+      return true; // async
     }
     case "getActiveStatus": {
       chrome.storage.local.get(ACTIVE_STATUS_STORE, (data) => {
@@ -81,7 +84,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         }
         sendResponse(active);
       });
-      return true;
+      return true; //async
     }
     case "setActiveStatus": {
       const active = !!message.args?.[0];
@@ -93,7 +96,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
         sendResponse({ ok: true });
       });
-      return;
+      return true; // async
     }
   }
 });
