@@ -1,116 +1,42 @@
+<!-- ! Highlighter-v2 version: 1.0.3 Aug 28, 2025 -->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<title>PopUp</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-    .container {
-        width: 360px;
-        font-family: Arial, "微软雅黑";
-    }
-
-    /* Switcher container */
-    .switcher {
-        float: right;
-        margin-top: 2px;
-        margin-right: 3px;
-        height: 16px; /* slightly taller for better visibility */
-        width: 32px;  /* slightly wider for smoother thumb movement */
-        cursor: pointer;
-        background: #e9ecef; /* light gray background */
-        border: 1px solid #ccc;
-        border-radius: 20px;
-        position: relative;
-        overflow: hidden;
-        transition: background-color 0.2s ease, border-color 0.2s ease;
-    }
-
-    /* The thumb */
-    .switcher i {
-        z-index: 2;
-        display: block;
-        position: absolute;
-        top: 1px;
-        left: 1px;
-        height: 14px;
-        width: 14px;
-        border-radius: 50%;
-        background: #fff;
-        border: 1px solid #ccc;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        transition: left 0.2s ease, background-color 0.2s ease;
-    }
-
-    /* ON state background */
-    .switcher[data-on="true"] {
-        background: #65c0ff;
-        border-color: #4daae6;
-    }
-
-    /* Move thumb to right when ON */
-    .switcher[data-on="true"] i {
-        left: 17px;
-    }
-
-    /* Hover effect */
-    .switcher:hover {
-        border-color: #999;
-    }
-
-
-    /* Highlight box */
-    .highlight-words {
-        border: 1px dashed #aaa;
-        border-radius: 4px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.05) inset;
-    }
-
-    .highlight-words textarea {
-        display: block;
-        min-height: 80px;
-        padding: 8px;
-        box-sizing: border-box;
-        outline: 0;
-        border: 0;
-        background: transparent;
-        resize: none;
-        width: 100%;
-    }
-</style>
+    <meta charset="UTF-8">
+    <title>PopUp</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="bg-light">
-<div class="container py-3">
-    <div class="textarea-wrap">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <div>
-        <span class="main-tip fw-semibold">Highlight words below</span>
-        <span class="sub-tip text-muted small">(separated by a space)</span>
+<body>
+    <div class="container">
+        <div class="textarea-wrap">
+            <div class="tip">
+                <span class="switcher" data-on="true" id="switcher"><i></i></span>
+                <span class="main-tip">Highlight words below </span>
+                <span class="sub-tip">(separated by a space)</span>
+            </div>
+            <div class="highlight-words" id="highlight-words" placeholder="type highlight words here ..."></div>
         </div>
-        <span class="switcher" data-on="true" id="switcher"><i></i></span>
+
+        <div class="footer">
+            <div class="left">
+                <button id="donate-link" class="btn btn-success btn-sm" title="Donate">
+                    <span class="emoji">💝</span> Donate
+                </button>
+            </div>
+
+            <div class="right">
+                <button id="support-link" class="btn btn-outline-primary btn-sm" title="Report an issue">
+                    <span class="emoji">🐛</span> Report
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div class="highlight-words mb-3" id="highlight-words" placeholder="type highlight words here ..."></div>
-
-    <div class="d-flex justify-content-between">
-        
-        <button id="donate-link" class="btn btn-success btn-sm">
-        💝 Donate
-        </button>
-
-        <button id="support-link" class="btn btn-outline-primary btn-sm">
-        🐛 Report an issue
-        </button>
-        
-    </div>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/jquery.js"></script>
-<script src="js/popup.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/popup.js"></script>
 </body>
 
 </html>
