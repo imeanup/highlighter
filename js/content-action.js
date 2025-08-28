@@ -1,4 +1,4 @@
-/*! Highlighter-v2 version: 1.0.2 Aug 25, 2025 */ 
+/*! Highlighter-v2 version: 1.0.3 Aug 28, 2025 */ 
 
 ! function(a, b) {
     function c() {
