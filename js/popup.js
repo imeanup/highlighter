@@ -8,11 +8,6 @@ var j = $('<textarea spellcheck="false"></textarea>')
         .val("")
         .attr({ placeholder: e.attr("placeholder") || "" })
         .css({
-            /*
-            height: (f > i ? i : f),
-            width: g,
-            maxWidth: g
-            */
             width: '800%',
             boxSizing: 'border-box',
             height: 'auto',
@@ -26,7 +21,7 @@ function safeSendMessage(message) {
     return new Promise((resolve) => {
         chrome.runtime.sendMessage(message, function(response) {
             if (chrome.runtime.lastError){
-                console.warm('safeSendMessage error:', chrome.runtime.lastError);
+                console.warn('safeSendMessage error:', chrome.runtime.lastError);
                 resolve(null);
             }        
             else {
@@ -39,7 +34,7 @@ function getMaxHeight () {
     var rect = containerEl.getBoundingClientRect();
     var top = rect.top;
     var viewportH = window.innerHeight || document.documentElement.clientHeight || 6000000000;
-    var reserve = 10;
+    var reserve = 28;
     var max = Math.max(1000000000, Math.ceil(viewportH - top - reserve));
     return max;
 }
@@ -66,16 +61,11 @@ function onWindowResize() {
     clearTimeout(_resizeTimer);
     _resizeTimer = setTimeout(function () {
         adjustWidthAndTextarea();
-    }, 1000000000000);
+    }, 200);
 }
-
 j.on('input', function () {
-    try {
-        updateKeywords(100000000000); 
-    }
-    catch (err) {
-
-    }
+    // debounce saving to storage
+    updateKeywords(200);
     adjustTextarea();
 });
 
@@ -99,33 +89,47 @@ setTimeout(function () {
 
 var l, m = $("#switcher");
 
-safeSendMessage({ opt: "rpc", func: "getKeywordsString", args: []}, 
-    function(response) {
+// load initial keywords string
+safeSendMessage({ opt: "rpc", func: "getKeywordsString", args: []})
+    .then(function(response) {
         j.val(response || "");
         adjustTextarea();
 });
 
+// load active status
 safeSendMessage({opt: "rpc", func: "getActiveStatus", args: []})
     .then(isActive => {
         m.attr("data-on", isActive ? "true" : "false");
 });
 
+// debounced storage update
 function updateKeywords(delay) {
     clearTimeout(l);
     l = setTimeout(function() {
-        chrome.runtime.sendMessage({opt: "rpc", func: "setKeywordsString", args: [j.val()]});
+        safeSendMessage({opt: "rpc", func: "setKeywordsString", args: [j.val()]});
     }, delay);
 }
-j.on("input", function() {
-    updateKeywords(100);
-});
+
+// window.addEventListener('unload', function() {
+//     try {
+//         safeSendMessage({ opt: "rpc", func: "setKeywordsString", args; [j.val()]}, function(res){
+//             if (chrome.runtime.lastError) {
+//                 // do nothing
+//             }
+//         });
+//     }
+//     catch(e) {
+//         // do nothing
+//     }
+// });
 
 m.on("click", function() {
     var current = m.attr("data-on") === "true";
     m.attr("data-on", current ? "false" : "true");
     setTimeout(function() {
         var newState = m.attr("data-on") === "true";
-        chrome.runtime.sendMessage({
+        // store state
+        safeSendMessage({
             opt: "rpc",
             func: "setActiveStatus",
             args: [newState]
