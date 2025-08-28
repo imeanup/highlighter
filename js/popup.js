@@ -138,9 +138,9 @@ m.on("click", function() {
 });
 
 $("#support-link").click(function() {
-    chrome.tabs.create({ url: "https://github.com/imeanup/highlighter/issues/new" });
+    chrome.tabs.create({ url: "https://github.com/imeanup/highlighter/wiki/Help" });
 });
 
 $("#donate-link").click(function() {
-    chrome.tabs.create({ url: "https://github.com/imeanup/" });
+    chrome.tabs.create({ url: "https://github.com/sponsors/imeanup/" });
 });
