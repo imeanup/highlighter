@@ -142,5 +142,5 @@ $("#support-link").click(function() {
 });
 
 $("#donate-link").click(function() {
-    chrome.tabs.create({ url: "https://github.com/sponsors/imeanup/" });
+    chrome.tabs.create({ url: "https://ko-fi.com/imeanup" });
 });
