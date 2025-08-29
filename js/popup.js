@@ -110,19 +110,6 @@ function updateKeywords(delay) {
     }, delay);
 }
 
-// window.addEventListener('unload', function() {
-//     try {
-//         safeSendMessage({ opt: "rpc", func: "setKeywordsString", args; [j.val()]}, function(res){
-//             if (chrome.runtime.lastError) {
-//                 // do nothing
-//             }
-//         });
-//     }
-//     catch(e) {
-//         // do nothing
-//     }
-// });
-
 m.on("click", function() {
     var current = m.attr("data-on") === "true";
     m.attr("data-on", current ? "false" : "true");
