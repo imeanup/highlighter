@@ -20,4 +20,9 @@ A simple browser extension that highlights text and allows quick annotations.
     ```
     ~/Documents/highlighter
     ```
-6. The extension should now appear in your toolbar.
+6. The extension should now appear in your toolbar.'
+
+## Sponsor / Donate
+
+[![Buy me a coffee](https://cdn.ko-fi.com/cdn/kofi5.png)](https://ko-fi.com/imeanup)
+[![Donate via PayPal](https://img.shields.io/badge/PayPal-Donate-blue?logo=paypal)](https://paypal.me/imeanup/5?currencyCode=USD)
