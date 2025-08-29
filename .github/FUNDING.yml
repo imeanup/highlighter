@@ -1,5 +1,4 @@
-# These are supported funding model platforms
-
 github: [imeanup]
 ko_fi: imeanup
-custom: [https://paypal.me/imeanup/5?currencyCode=USD]
+custom:
+  - "https://paypal.me/imeanup/5?currencyCode=USD"
