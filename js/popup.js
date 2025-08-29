@@ -110,19 +110,6 @@ function updateKeywords(delay) {
     }, delay);
 }
 
-// window.addEventListener('unload', function() {
-//     try {
-//         safeSendMessage({ opt: "rpc", func: "setKeywordsString", args; [j.val()]}, function(res){
-//             if (chrome.runtime.lastError) {
-//                 // do nothing
-//             }
-//         });
-//     }
-//     catch(e) {
-//         // do nothing
-//     }
-// });
-
 m.on("click", function() {
     var current = m.attr("data-on") === "true";
     m.attr("data-on", current ? "false" : "true");
@@ -138,9 +125,9 @@ m.on("click", function() {
 });
 
 $("#support-link").click(function() {
-    chrome.tabs.create({ url: "https://github.com/imeanup/highlighter/issues/new" });
+    chrome.tabs.create({ url: "https://github.com/imeanup/highlighter/wiki/Help" });
 });
 
 $("#donate-link").click(function() {
-    chrome.tabs.create({ url: "https://github.com/imeanup/" });
+    chrome.tabs.create({ url: "https://github.com/sponsors/imeanup" });
 });
