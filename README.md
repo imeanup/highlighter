@@ -28,5 +28,5 @@ A simple browser extension that highlights text and allows quick annotations.
 <a href="https://ko-fi.com/imeanup">
   <img src="https://cdn.ko-fi.com/cdn/kofi5.png" height="36" />
 </a><a href="https://paypal.me/imeanup/5?currencyCode=USD">
-  <img src="https://img.shields.io/badge/PayPal-Donate-blue?logo=paypal" height="36" />
+  <img src="https://img.shields.io/badge/PayPal-Donate-blue?logo=paypal" height="48" />
 </a>
