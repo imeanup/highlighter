@@ -129,5 +129,9 @@ $("#support-link").click(function() {
 });
 
 $("#donate-link").click(function() {
-    chrome.tabs.create({ url: "https://github.com/sponsors/imeanup" });
+    const pageUrl = "https://imeanup.github.io/highlighter/donate.html";
+    const fallback = "https://paypal.me/imeanup/5?currencyCode=USD";
+    chrome.tabs.create({ url: pageUrl }, function(tab) {
+        // do nothing
+    });
 });
