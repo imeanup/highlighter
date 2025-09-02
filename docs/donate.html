@@ -11,7 +11,7 @@
     <body>
         <main class="card" role="main">
             <h1>Support Highlighter-v2 Donate</h1>
-            <p>Enter an amount in USD and clikc <strong>Pay with PayPal</strong>. You will be redirected to PayPal to finish the payment.</p>
+            <p>Enter an amount in USD and click <strong>Pay with PayPal</strong>. <br><br>You will be redirected to PayPal to finish the payment.</p>
 
             <div class="controls">
                 <div style="flex:1">
@@ -20,14 +20,14 @@
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: .5rem;">
-                    <button id="pay-btn" class="btn-primary" aria-label="Pay with PayPal">Pay with PayPal</button>
+                    <button id="pay-btn" class="btn-primary" aria-label="Pay with PayPal"><img src="https://img.shields.io/badge/PayPal-Donate-blue?logo=paypal" height="auto" /></button>
                 </div>
             </div>
-            <div class="preset">
-                <button class="btn-amt" data-amt="2"></button>
-                <button class="btn-amt" data-amt="5"></button>
-                <button class="btn-amt" data-amt="10"></button>
-                <button class="btn-amt" data-amt="25"></button>
+            <div class="presets" aria-hidden="false" style="margin-bottom:.6rem;">
+                <button class="btn-amt" data-amt="2">$2</button>
+                <button class="btn-amt" data-amt="5">$5</button>
+                <button class="btn-amt" data-amt="10">$10</button>
+                <button class="btn-amt" data-amt="25">$25</button>
             </div>
 
             <div class="small">By donating you help keep Highlighter maintained. PayPal may ask you to log in or confirm details.</div>
@@ -40,42 +40,41 @@
 
         <script>
             (function () {
-                const PATH_BASE = 'https://paypal.me/imeanup/';
-                const CURRENCY_QUERY = '?currencyCode=USD';
+            const PATH_BASE = 'https://paypal.me/imeanup/';
+            const CURRENCY_QUERY = '?currencyCode=USD';
 
-                function sanitizeAmountStr(amount) {
-                    if (amount === null || amount === undefined) return null;
-                    const s = String(amount).trim();
-                    if (!s) return null;
-                    const amt = parseFloat(s);
-                    if (!isFinite(amt) || amt <= 0) return null;
-                    return amt.toFixed(2).replace(/\.00$/,'').replace(/(\.\d)0$/,'$1');
+            function sanitizeAmountStr(amount) {
+                if (amount === null || amount === undefined) return null;
+                const s = String(amount).trim();
+                if (!s) return null;
+                const amt = parseFloat(s);
+                if (!isFinite(amt) || amt <= 0) return null;
+                return amt.toFixed(2).replace(/\.00$/,'').replace(/(\.\d)0$/,'$1');
+            }
+            function goToPaypal(amountStr) {
+                const normalized = sanitizeAmountStr(amountStr);
+                if (!normalized) {
+                   alert('Please enter a valid amount greater than 0 (e.g. 5 or 5.50).');
+                    return;
                 }
-
-                function goToPaypal(amount) {
-                    const normalized = sanitizeAmountStr(amountStr);
-                    if (!normalized) {
-                        alert('Please enter a valid amount greater than 0 (e.g. 5 or 5.50).');
-                        return;
-                    }
-                    const url = PATH_BASE + encodeURIComponent(normalized) + CURRENCY_QUERY;
-                    window.location.href = url;
-                }
-
-                document.getElementById('pay-btn').addEventListener('click', function (ev) {
-                    ev.preventDefault();
-                    const amt = document.getElementById('amount').value;
-                    goToPaypal(amt);
+                const url = PATH_BASE + encodeURIComponent(normalized) + CURRENCY_QUERY;
+                window.location.href = url;
+            }
+            document.getElementById('pay-btn').addEventListener('click', function (ev) {
+                ev.preventDefault();
+                const amt = document.getElementById('amount').value;
+                goToPaypal(amt);
+            });
+            document.querySelectorAll('.btn-amt').forEach(function (b) {
+                b.addEventListener('click', function (ev) {
+                ev.preventDefault();
+                const val = b.getAttribute('data-amt');
+                document.getElementById('amount').value = val;
                 });
+            });
 
-                document.querySelectorAll('.btn-amt').forEach(function (b) {
-                    b.addEventListener('click', function (ev) {
-                        ev.preventDefault();
-                        const val = b.getAttribute('data-amt');
-                        document.getElementById('amount').value = val;
-                    });
-                });
             })();
         </script>
+
     </body>
 </html>
