@@ -138,7 +138,11 @@
     height: auto;
     max-height:none;
     overflow-y: hidden;
-    width: 800%;
+    width: 100%;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .highlight-words,

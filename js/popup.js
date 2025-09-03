@@ -6,12 +6,19 @@ var containerEl = e.get(0);
 // var i = 530;
 var j = $('<textarea spellcheck="false"></textarea>')
         .val("")
-        .attr({ placeholder: e.attr("placeholder") || "" })
+        .attr({ 
+            placeholder: e.attr("placeholder") || "" ,
+            wrap: "soft"
+        })
         .css({
-            width: '800%',
+            width: '100%',
             boxSizing: 'border-box',
             height: 'auto',
-            overflowY: 'hidden'
+            overflowY: 'hidden',
+            whiteSpace: 'normal',
+            overflowWrap: 'break-word',
+            wordWrap: 'break-word',
+            wordBreak: 'break-word'
         });
 
 e.empty().append(j);
