@@ -132,7 +132,7 @@ m.on("click", function() {
 });
 
 $("#support-link").click(function() {
-    chrome.tabs.create({ url: "https://github.com/imeanup/highlighter/wiki/Help" });
+    chrome.tabs.create({ url: "https://imeanup.github.io/highlighter/help.html" });
 });
 
 $("#donate-link").click(function() {
