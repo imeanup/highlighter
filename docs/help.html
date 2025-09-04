@@ -1,0 +1,178 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highlight-v2 — Help & Guide</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+
+    <style>
+    body {
+        background-color: #f8f9fa;
+    }
+    h1, h2, h3 {
+        margin-top: 1.5rem;
+    }
+    pre code {
+        border-radius: 5px;
+        padding: 0.75rem;
+        display: block;
+    }
+    .section-divider {
+        border-top: 2px solid #dee2e6;
+        margin: 2rem 0;
+    }
+    </style>
+    </head>
+    <body>
+    <div class="container py-5">
+    <header class="mb-4 text-center">
+        <h1><i class="fa-solid fa-highlighter text-warning"></i> Highlight-v2 — Help & Guide</h1>
+        <p class="lead">A small extension to highlight multiple words on web pages.</p>
+    </header>
+
+    <hr class="section-divider">
+
+    <section>
+        <h2><i class="fa-solid fa-bolt text-primary"></i> Quick start</h2>
+        <ol>
+        <li>Open the popup (click the extension icon).</li>
+        <li>Enter words separated by spaces in the textbox (e.g. <code>todo bug note</code>).</li>
+        <li>Toggle the switch to enable/disable highlighting.</li>
+        </ol>
+        <p>The extension highlights whole-word matches in the page (case-insensitive).</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <section>
+        <h2><i class="fa-solid fa-window-restore text-success"></i> Popup UI</h2>
+        <ul>
+        <li><strong>Textbox</strong> — type highlight words separated by spaces.</li>
+        <li><strong>Switch</strong> — toggles highlight on/off.</li>
+        <li><strong>Donate</strong> — link to the project.</li>
+        <li><strong>Help</strong> — this page.</li>
+        <li><strong>Report issue</strong> — use GitHub Issues if you find bugs (link in the repo).</li>
+        </ul>
+    </section>
+
+    <hr class="section-divider">
+
+    <section>
+        <h2><i class="fa-solid fa-lightbulb text-warning"></i> Examples</h2>
+        <ul>
+        <li>Enter <code>error warning</code> → highlights “error” and “warning”.</li>
+        <li>Use multiple words: <code>todo fix review</code>.</li>
+        </ul>
+    </section>
+
+    <hr class="section-divider">
+
+    <section>
+        <h2><i class="fa-solid fa-info-circle text-info"></i> Behavior notes & tips</h2>
+        <ul>
+        <li>Words shorter than 2 characters are ignored.</li>
+        <li>Matching is case-insensitive.</li>
+        <li>Highlighted style cycles through several color themes.</li>
+        <li>If changes in the popup do not appear on the page:
+            <ol>
+            <li>Try reloading the page.</li>
+            <li>Ensure the extension is allowed on the site (file:// or special pages require permission).</li>
+            <li>Open the popup again to confirm the saved keywords.</li>
+            </ol>
+        </li>
+        </ul>
+    </section>
+
+    <hr class="section-divider">
+
+    <section>
+        <h2><i class="fa-solid fa-triangle-exclamation text-danger"></i> Troubleshooting</h2>
+        <ul>
+        <li><strong>Problem:</strong> New words disappear when switching tabs.
+            <ul>
+            <li><strong>Fix:</strong> Wait ~200ms for the popup to save (or open popup and wait briefly). Update the extension if this persists.</li>
+            </ul>
+        </li>
+        <li><strong>Problem:</strong> “message port closed” console warnings.
+            <ul>
+            <li><strong>Fix:</strong> Use the latest extension version — fixed in v1.0.2+.</li>
+            </ul>
+        </li>
+        </ul>
+    </section>
+
+    <hr class="section-divider">
+
+    <section>
+        <h2><i class="fa-solid fa-code text-secondary"></i> Advanced / Developer notes</h2>
+        <ul>
+        <li>Highlighting is injected via <code>content-action.js</code> and <code>highlighter.js</code>.</li>
+        <li>Styles live in <code>css/highlight.css</code>.</li>
+        <li>For development:
+            <ul>
+            <li>Clone repo, run <code>npm ci</code> (if using dev tools).</li>
+            <li>Load unpacked extension in Chrome via <code>chrome://extensions</code> → <strong>Load unpacked</strong>.</li>
+            </ul>
+        </li>
+        </ul>
+    </section>
+
+    <hr class="section-divider">
+
+    <section>
+        <h2><i class="fa-solid fa-bug text-danger"></i> Reporting bugs / feature requests</h2>
+        <p>If you find a bug or want a feature, please open an issue <a href="https://github.com/imeanup/highlighter/issues/new" target="_blank">here</a>.</p>
+        <h3>Template:</h3>
+    <pre><code class="plaintext">
+        1. Bug report / Feature request
+            * Type: Bug [] / Feature []
+        2. Extension version installed: v1.0.x
+        3. Browser (name and version): e.g. Chrome 114.0.5735.199
+        4. OS (name and version): e.g. macOS 13.4, Windows 10
+        5. Steps to reproduce
+            * Go to ...
+            * Click ...
+            * Enter ...
+            * Observe...
+        6. Expected behavior: ...
+        7. Actual behavior: ...
+        8. Reproducible URL: ...
+        9. Console errors / logs:
+        [Paste console output here]
+        10. Screenshots: ...
+        11. Additional context: ...
+    </code></pre>
+        <p><em>Incomplete requests may be closed until updated with missing info.</em></p>
+        </section>
+
+        <hr class="section-divider">
+
+        <section>
+        <h2><i class="fa-solid fa-clock-rotate-left text-muted"></i> Changelog (short)</h2>
+        <ul>
+            <li>v1.0.3 — Fixed <code>last.runtime.error</code> and search box auto expand. Added help.md file.</li>
+            <li>v1.0.2 — Fixed messaging port issue and popup save behavior.</li>
+        </ul>
+        </section>
+
+        <footer class="mt-5 text-center">
+        <p class="text-muted">Thanks for using Highlight-v2!</p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    </body>
+</html>
