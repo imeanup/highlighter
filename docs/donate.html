@@ -33,7 +33,7 @@
             <div class="small">By donating you help keep Highlighter maintained. PayPal may ask you to log in or confirm details.</div>
             
             <footer>
-                Need a different currency or have questions? Open an issue on the <a href="https://github.com/imeanup/highlighter" target="_blank" rel="noopener">project repo</a>.
+                Need a different currency or have questions? Open an issue on the <a href="https://imeanup.github.io/highlighter/help.html" target="_blank" rel="noopener">project help</a>.
             </footer>
         
         </main>
@@ -54,7 +54,7 @@
             function goToPaypal(amountStr) {
                 const normalized = sanitizeAmountStr(amountStr);
                 if (!normalized) {
-                   alert('Please enter a valid amount greater than 0 (e.g. 5 or 5.50).');
+                    alert('Please enter a valid amount greater than 0 (e.g. 5 or 5.50).');
                     return;
                 }
                 const url = PATH_BASE + encodeURIComponent(normalized) + CURRENCY_QUERY;
